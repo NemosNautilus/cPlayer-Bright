@@ -1,6 +1,6 @@
 # 🎵 cPlayer
 
-![cPlayer](https://nemosnautilus.com/cplayer/v600.png)
+![cPlayer](https://nemosnautilus.com/cplayer/v610.png)
 
 ---
 
@@ -74,7 +74,7 @@ cPlayer currently supports content from a wide range of rhythm games and platfor
 
 ---
 
-### 🖥️ PC — YARG / Clone Hero / Phase Shift
+### 🖥️ PC — YARG / Clone Hero / Sound System / Phase Shift
 
 **Formats:**  
 `songs.dta` | `.yargsong` | `song.ini` | `.sng`
@@ -152,7 +152,7 @@ A Help document is included if you’d like a more structured walkthrough.
 
 - **Language:** C#  
 - **Framework:** .NET Framework **4.8.1**  
-- **IDE:** Visual Studio **2022 Community Edition**
+- **IDE:** Visual Studio **2026**
 
 For best results, use the same environment.
 
@@ -177,4 +177,4 @@ cPlayer has grown well beyond its original scope and continues to evolve alongsi
 
 Enjoy.
 
-*December 13, 2025*
+*November 17, 2026*
