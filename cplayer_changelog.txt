@@ -1,3 +1,14 @@
+v6.1.1
+
+Sound System is out and cPlayer is getting a minor update to accommodate the latest game in the rhythm community
+
+- added ability to read audio_offset INI tag as used by Sound System
+- added ability to parse decimal value for video_start_time INI tag as used by Sound System
+- adjusted playback of .chart files to account for quirks in Sound System files
+- fixed bug where songs with loose multitrack audio (Clone Hero/Sound System/etc) would not allow you to control the stems in Audio Mixer
+
+----------
+
 v6.1.0
 
 - major renderer overhaul to improve performance - based on the built-in FPS counter used for debugging, most modes improved from roughly 10–12 FPS to 30-40 FPS - second-screen performance now matches the built-in viewer in most non-video modes - video overlay on the second screen still carries a significant performance cost so FPS take a dive there
