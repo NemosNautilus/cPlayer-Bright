@@ -92,11 +92,11 @@ namespace cPlayer
             if (Path.GetExtension(midi).Equals(".chart"))
             {
                 MIDIFile = ChartToRockBandMidi.ConvertChartToMidi(midi);
+                var chartMidPath = Path.Combine(Path.GetDirectoryName(midi), "notes.mid");
+                MidiFile.Export(chartMidPath, MIDIFile);
+                midi = chartMidPath;
             }
-            else
-            {
-                MIDIFile = Tools.NemoLoadMIDI(midi).Events;
-            }
+            MIDIFile = Tools.NemoLoadMIDI(midi).Events;
             if (MIDIFile == null) return false;                      
             try
             {

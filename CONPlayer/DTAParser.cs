@@ -519,14 +519,25 @@ namespace cPlayer
                             {
                                 song.TrackNumber = 1; //for stupid values like 16,000
                             }
-                        }
+                        }                                                                   
                         else if (line.Contains("delay =") || line.Contains("delay="))
                         {
-                            song.PSDelay = Convert.ToInt16(Tools.GetConfigString(line));
+                            song.AudioDelay = Convert.ToInt16(Tools.GetConfigString(line));
+                        }
+                        else if (line.Contains("audio_offset =") || line.Contains("audio_offset=")) //Sound System
+                        {
+                            song.AudioOffset = Convert.ToInt16(Tools.GetConfigString(line));
                         }
                         else if (line.Contains("video_start_time =") || line.Contains("video_start_time="))
                         {
-                            song.VideoStartTime = Convert.ToInt16(Tools.GetConfigString(line));
+                            if (line.Contains(".")) //Sound System
+                            {
+                                song.VideoStartTime = Convert.ToInt16(Convert.ToDecimal(Tools.GetConfigString(line)) * 1000);
+                            }
+                            else
+                            {
+                                song.VideoStartTime = Convert.ToInt16(Tools.GetConfigString(line));
+                            }
                         }
                         else if (line.Contains("diff_guitar=") || line.Contains("diff_guitar ="))
                         {
@@ -2662,7 +2673,8 @@ namespace cPlayer
         public Int32 PreviewStart { get; set; }
         public Int32 PreviewEnd { get; set; }
         public int DTAIndex { get; set; }
-        public int PSDelay { get; set; }
+        public int AudioDelay { get; set; }
+        public int AudioOffset { get; set; } //for Sound System
         public int VideoStartTime { get; set; }
         public bool Master { get; set; }
         public bool DoNotExport { get; set; }
@@ -2758,7 +2770,8 @@ namespace cPlayer
             HasSongIDError = false;
             CATemh = false;
             DTAIndex = 0;
-            PSDelay = 0;
+            AudioDelay = 0;
+            AudioOffset = 0;
             VideoStartTime = 0;
             ChannelsBassStart = 0;
             ChannelsDrumsStart = 0;

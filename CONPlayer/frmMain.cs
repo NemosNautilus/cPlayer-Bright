@@ -15,7 +15,6 @@ using NautilusFREE;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -28,7 +27,6 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -933,13 +931,13 @@ namespace cPlayer
 
             if (!yarg.Checked && !fortNite.Checked && !guitarHero.Checked)
             {
-                Tools.DeleteFile(CurrentSongArt);
+                /*Tools.DeleteFile(CurrentSongArt);
                 Tools.DeleteFile(CurrentSongArtBlurred);
                 Tools.DeleteFile(CurrentSongMIDI);
                 Tools.DeleteFile(NextSongArtPNG);
                 Tools.DeleteFile(NextSongArtJPG);
                 Tools.DeleteFile(NextSongArtBlurred);
-                Tools.DeleteFile(NextSongMIDI);
+                Tools.DeleteFile(NextSongMIDI);*/
             }
             DoClickStop();
             PlaylistPath = "";
@@ -1168,7 +1166,8 @@ namespace cPlayer
                 isRhythmOnBass = song.RhythmBass,
                 isRhythmOnKeys = song.RhythmKeys || (song.Name.Contains("Rhythm Version") && !song.RhythmBass),
                 hasProKeys = song.ProKeysDiff > 0,
-                PSDelay = song.PSDelay,
+                AudioDelay = song.AudioDelay,
+                AudioOffset = song.AudioOffset,
                 yargPath = song.YargPath,
                 Languages = song.Languages
             };
@@ -3044,11 +3043,11 @@ namespace cPlayer
             }
             if (!yarg.Checked && !fortNite.Checked && rockSmith.Checked && !guitarHero.Checked)
             {
-                Tools.DeleteFile(NextSongArtPNG);
+                //Tools.DeleteFile(NextSongArtPNG);
                 Tools.DeleteFile(CurrentSongArt);
             }
             if (!all_files) return;
-            Tools.DeleteFile(CurrentSongArt);
+            //Tools.DeleteFile(CurrentSongArt);
             Tools.DeleteFile(CurrentSongArtBlurred);
             if (xbox360.Checked || pS3.Checked)
             {
@@ -3223,7 +3222,7 @@ namespace cPlayer
             }
             //channel = channel + song.ChannelsCrowd;
             if (doAudioBacking) //song.ChannelsBacking > 0 &&  ---- should always be enabled per specifications
-            {
+            {                
                 if (ActiveSongData.ChannelsTotal == 0 && chans > 0)
                 {
                     ActiveSongData.ChannelsTotal = chans;
@@ -7266,9 +7265,10 @@ namespace cPlayer
                     sw.Write(song.isRhythmOnBass + "\t");
                     sw.Write(song.isRhythmOnKeys + "\t");
                     sw.Write(song.hasProKeys + "\t");
-                    sw.Write(song.PSDelay + "\t");
+                    sw.Write(song.AudioDelay + "\t");
                     sw.Write(song.Languages + "\t");
-                    sw.Write(song.VocalParts.ToString(CultureInfo.InvariantCulture));
+                    sw.Write(song.VocalParts.ToString(CultureInfo.InvariantCulture) + "\t");
+                    sw.Write(song.AudioOffset);
                 }
             }
             UpdateRecentPlaylists(PlaylistPath);
@@ -7419,10 +7419,12 @@ namespace cPlayer
                             isRhythmOnKeys = song_info.Count() >= 25 && song_info[23].Contains("True"),
                             hasProKeys = song_info.Count() >= 25 && song_info[24].Contains("True"),
                             //v2.1.1 added Phase Shift Delay
-                            PSDelay = song_info.Count() >= 26 ? Convert.ToInt16(song_info[25]) : 0,
+                            AudioDelay = song_info.Count() >= 26 ? Convert.ToInt16(song_info[25]) : 0,
                             //v2.1.2 added Languages and VocalParts                            
                             Languages = song_info.Count() >= 27 ? song_info[26].Replace(";Language(s)", "").Replace(",", "") : "Unknown",
-                            VocalParts = song_info.Count() >= 28 ? Convert.ToInt16(song_info[27]) : -1
+                            VocalParts = song_info.Count() >= 28 ? Convert.ToInt16(song_info[27]) : -1,
+                            //v6.1.1 added Audio Offset
+                            AudioOffset = song_info.Count() >= 29 ? Convert.ToInt16(song_info[28]) : 0
                         };
                         playlistInfoCount = song_info.Count();
                         if (File.Exists(song.Location))
@@ -8137,7 +8139,7 @@ namespace cPlayer
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var version = GetAppVersion();
-            var message = AppName + " - The Rhythm Game Music Player\nVersion: " + version + "\n© TrojanNemo, 2014-2026\n\n";
+            var message = AppName + " - The Rhythm Game Music Player\nVersion: " + version + "\n© Nemo's Nautilus, 2014-2026\n\n";
             var credits = Tools.ReadHelpFile("credits");
             videoOverlay.TopMost = false;
             MessageBox.Show(message + credits + "\n\n***Just For Fun***", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -10709,8 +10711,17 @@ namespace cPlayer
         public double GetCorrectedTime()
         {
             if (PlayingSong == null) return 0;
+                        
+            double time = 0.0;
+            if (PlayingSong.AudioOffset > 0)
+            {
+                time = PlaybackSeconds - ((double)BassBuffer / 1000) + (((double)PlayingSong.AudioOffset + 1850) / 1000);
+            }
+            else
+            {
+                time = PlaybackSeconds - ((double)BassBuffer / 1000) - ((double)PlayingSong.AudioDelay / 1000);
+            }
 
-            var time = PlaybackSeconds - ((double)BassBuffer / 1000) - ((double)PlayingSong.PSDelay / 1000);
             if (enableBTAVOffsetSync)
             {
                 time -= ((double)BTAVOffsetSync / 1000);
@@ -14722,14 +14733,20 @@ namespace cPlayer
                 if (isM4A)
                 {
                     ActiveSongData.ChannelsDrums = 2;
+                    PlayingSong.ChannelsDrums = 2;
                     ActiveSongData.ChannelsBassStart = 0;
                     ActiveSongData.ChannelsBass = 2;
+                    PlayingSong.ChannelsBass = 2;
                     ActiveSongData.ChannelsBassStart = 2;
                     ActiveSongData.ChannelsGuitar = 2;
+                    PlayingSong.ChannelsGuitar = 2;
                     ActiveSongData.ChannelsGuitarStart = 4;
                     ActiveSongData.ChannelsVocals = 2;
+                    PlayingSong.ChannelsVocals = 2;
                     ActiveSongData.ChannelsVocalsStart = 6;
+                    PlayingSong.ChannelsBacking = 2;
                     ActiveSongData.ChannelsTotal = 10;
+                    PlayingSong.ChannelsTotal = 10;
                     ActiveSongData.AttenuationValues = "";
                     ActiveSongData.PanningValues = "";
 
@@ -14753,15 +14770,32 @@ namespace cPlayer
 
         public void UpdateStemVolumes()
         {
+            if (StemStreams.Count > 0)
+            {
+                // Loose audio stems. (Clone Hero / Sound System / etc)
+                SetStemVolume("drums", doAudioDrums ? drumsVol : 0f);
+                SetStemVolume("bass", doAudioBass ? bassVol : 0f);
+                SetStemVolume("guitar", doAudioGuitar ? guitarVol : 0f);
+                SetStemVolume("keys", doAudioKeys ? keysVol : 0f);
+                SetStemVolume("vocals", doAudioVocals ? vocalsVol : 0f);
+                SetStemVolume("backing", doAudioBacking ? backingVol : 0f);
+                SetStemVolume("crowd", doAudioCrowd ? crowdVol : 0f);
+                return;
+            }
+
             //ONLY DO THIS IF CHANGING VOLUME AND BASS IS ALREADY PLAYING AND THESE STREAMS ARE VALID
             var channel_info = Bass.BASS_ChannelGetInfo(BassStream);
             var matrix = GetChannelMatrix(channel_info.chans);
             BassMix.BASS_Mixer_ChannelSetMatrix(BassStream, matrix);
         }
-                
-        private bool PrepMixerPS(IList<string> audioFiles, out int mixer, out List<int> NextSongStreams)
+
+        private readonly Dictionary<string, List<int>> StemStreams =
+        new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
+
+        private bool PrepMixerPC(IList<string> audioFiles, out int mixer, out List<int> NextSongStreams)
         {
             BassStreams.Clear();
+            StemStreams.Clear();
             try
             {
                 var audioFile = opusFiles.Any() ? opusFiles[0] : (mp3Files.Any() ? mp3Files[0] : (wavFiles.Any() ? wavFiles[0] : oggFiles[0]));
@@ -14776,6 +14810,7 @@ namespace cPlayer
 
                 // create a decoder for the audio file(s)
                 var channel_info = Bass.BASS_ChannelGetInfo(BassStream);
+                Bass.BASS_StreamFree(BassStream);
 
                 // create a stereo mixer with same frequency rate as the input file
                 BassMixer = BassMix.BASS_Mixer_StreamCreate(channel_info.freq, 2, BASSFlag.BASS_MIXER_END);//BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT);
@@ -14802,41 +14837,51 @@ namespace cPlayer
 
                 if (File.Exists(drums) || File.Exists(drums1) || File.Exists(drums2) || File.Exists(drums3) || File.Exists(drums4))
                 {
-                    Parser.Songs[0].ChannelsDrums = 2; //don't matter as long as it's more than 0 to enable it
+                    ActiveSongData.ChannelsDrums = 2; //don't matter as long as it's more than 0 to enable it
+                    PlayingSong.ChannelsDrums = 2;
                 }
                 if (File.Exists(bass) || File.Exists(rhythm))
                 {
-                    Parser.Songs[0].ChannelsBass = 2;
+                    ActiveSongData.ChannelsBass = 2;
+                    PlayingSong.ChannelsBass = 2;
                 }
                 if (File.Exists(guitar) || File.Exists(guitar1) || File.Exists(guitar2))
                 {
-                    Parser.Songs[0].ChannelsGuitar = 2;
+                    ActiveSongData.ChannelsGuitar = 2;
+                    PlayingSong.ChannelsGuitar = 2;
                 }
                 if (File.Exists(keys))
                 {
-                    Parser.Songs[0].ChannelsKeys = 2;
+                    ActiveSongData.ChannelsKeys = 2;
+                    PlayingSong.ChannelsKeys = 2;
                 }
                 if (File.Exists(vocals) || File.Exists(vocals1) || File.Exists(vocals2))
                 {
-                    Parser.Songs[0].ChannelsVocals = 2;
+                    ActiveSongData.ChannelsVocals = 2;
+                    PlayingSong.ChannelsVocals = 2;
                 }
                 if (File.Exists(crowd))
                 {
-                    Parser.Songs[0].ChannelsCrowd = 2;
+                    ActiveSongData.ChannelsCrowd = 2;
+                    PlayingSong.ChannelsCrowd = 2;
+                }
+                if (File.Exists(song))
+                {                    
+                    PlayingSong.ChannelsBacking = 2;
                 }
 
                 if (doAudioDrums)
                 {
                     if (File.Exists(drums))
                     {
-                        AddAudioToMixer(drums);
+                        AddAudioToMixer(drums, "drums");
                     }
                     else
                     {
                         var split_drums = new List<string> { drums1, drums2, drums3, drums4 };
                         foreach (var drum in split_drums.Where(File.Exists))
                         {
-                            AddAudioToMixer(drum);
+                            AddAudioToMixer(drum, "drums");
                         }
                     }
                 }
@@ -14844,48 +14889,48 @@ namespace cPlayer
                 {
                     if (File.Exists(bass))
                     {
-                        AddAudioToMixer(bass);
+                        AddAudioToMixer(bass, "bass");
                     }
                     else if (File.Exists(rhythm))
                     {
-                        AddAudioToMixer(rhythm);
+                        AddAudioToMixer(rhythm, "rhythm");
                     }
                 }
                 if (doAudioGuitar)
                 {
                     if (File.Exists(guitar))
                     {
-                        AddAudioToMixer(guitar);
+                        AddAudioToMixer(guitar, "guitar");
                     }
                     else
                     {
                         var split_guitar = new List<string> { guitar1, guitar2 };
                         foreach (var gtr in split_guitar.Where(File.Exists))
                         {
-                            AddAudioToMixer(gtr);
+                            AddAudioToMixer(gtr, "gtr");
                         }
                     }
                     if (File.Exists(rhythm) && !File.Exists(bass))
                     {
-                        AddAudioToMixer(rhythm);
+                        AddAudioToMixer(rhythm, "rhythm");
                     }
                 }
                 if (doAudioKeys && File.Exists(keys))
                 {
-                    AddAudioToMixer(keys);
+                    AddAudioToMixer(keys, "keys");
                 }
                 if (doAudioVocals)
                 {
                     if (File.Exists(vocals))
                     {
-                        AddAudioToMixer(vocals);
+                        AddAudioToMixer(vocals, "vocals");
                     }
                     else
                     {
                         var split_vocals = new List<string> { vocals1, vocals2 };
                         foreach (var vocal in split_vocals.Where(File.Exists))
                         {
-                            AddAudioToMixer(vocal);
+                            AddAudioToMixer(vocal, "vocal");
                         }
                     }
                 }
@@ -14893,20 +14938,20 @@ namespace cPlayer
                 {
                     if (File.Exists(backing))
                     {
-                        AddAudioToMixer(backing);
+                        AddAudioToMixer(backing, "backing");
                     }
                     else if (File.Exists(song))
                     {
-                        AddAudioToMixer(song);
+                        AddAudioToMixer(song, "backing");
                     }
                     else if (audioFiles[0] == guitar)
                     {
-                        AddAudioToMixer(guitar);
+                        AddAudioToMixer(guitar, "backing");
                     }
                 }
                 if (doAudioCrowd && File.Exists(crowd))
                 {
-                    AddAudioToMixer(crowd);
+                    AddAudioToMixer(crowd, "crowd");
                 }
             }
             catch
@@ -14920,20 +14965,66 @@ namespace cPlayer
             return true;
         }
 
-        private void AddAudioToMixer(string audioFile)
+        private void AddAudioToMixer(string audioFile, string stem)
         {
-            if (opusFiles.Any())
+            int stream;
+
+            if (Path.GetExtension(audioFile).Equals(".opus",
+                StringComparison.OrdinalIgnoreCase))
             {
-                BassStream = BassOpus.BASS_OPUS_StreamCreateFile(audioFile, 0, 0, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT);
+                stream = BassOpus.BASS_OPUS_StreamCreateFile(
+                    audioFile, 0, 0,
+                    BASSFlag.BASS_STREAM_DECODE |
+                    BASSFlag.BASS_SAMPLE_FLOAT);
             }
-            else //ogg or mp3 or wav
+            else
             {
-                BassStream = Bass.BASS_StreamCreateFile(audioFile, 0, 0, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT);
+                stream = Bass.BASS_StreamCreateFile(
+                    audioFile, 0, 0,
+                    BASSFlag.BASS_STREAM_DECODE |
+                    BASSFlag.BASS_SAMPLE_FLOAT);
             }
-            var stream_info = Bass.BASS_ChannelGetInfo(BassStream);
-            if (stream_info.chans == 0) return;
-            BassMix.BASS_Mixer_StreamAddChannel(BassMixer, BassStream, BASSFlag.BASS_MIXER_MATRIX);
-            BassStreams.Add(BassStream);
+
+            if (stream == 0)
+                return;
+
+            var info = Bass.BASS_ChannelGetInfo(stream);
+
+            if (info.chans == 0)
+            {
+                Bass.BASS_StreamFree(stream);
+                return;
+            }
+
+            if (!BassMix.BASS_Mixer_StreamAddChannel(
+                BassMixer, stream, BASSFlag.BASS_MIXER_MATRIX))
+            {
+                Bass.BASS_StreamFree(stream);
+                return;
+            }
+
+            // Preserve existing stream tracking.
+            BassStreams.Add(stream);
+            BassStream = stream;
+
+            // Associate this stream with its instrument.
+            if (!StemStreams.ContainsKey(stem))
+                StemStreams[stem] = new List<int>();
+
+            StemStreams[stem].Add(stream);
+        }
+
+        private void SetStemVolume(string stem, float volume)
+        {
+            if (!StemStreams.TryGetValue(stem, out var streams))
+                return;
+
+            volume = Math.Max(0f, Math.Min(3f, volume));
+
+            foreach (int stream in streams)
+            {
+                Bass.BASS_ChannelSetAttribute(stream, BASSAttribute.BASS_ATTRIB_VOL, volume);
+            }
         }
 
         private bool SafeChecked(ToolStripMenuItem item)
@@ -15083,13 +15174,45 @@ namespace cPlayer
                     }
                     int mixer;
                     List<int> streams;
-                    if (!PrepMixerPS(AudioFiles, out mixer, out streams))
+
+                    //temporarily enable all stems for creating loose stems stream
+                    var drums = doAudioDrums;
+                    var bass = doAudioBass;
+                    var guitar = doAudioGuitar;
+                    var keys = doAudioKeys;
+                    var vocals = doAudioVocals;
+                    var backing = doAudioBacking;
+                    var crowd = doAudioCrowd;
+
+                    doAudioDrums = true;
+                    doAudioBass = true;
+                    doAudioGuitar = true;
+                    doAudioKeys = true;
+                    doAudioVocals = true;
+                    doAudioBacking = true;
+                    doAudioCrowd = true;
+
+                    if (!PrepMixerPC(AudioFiles, out mixer, out streams))
                     {
                         const string msg = "Error preparing audio mixer - can't play that song";
                         MessageBox.Show(msg, AppName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         StopPlayback();
+                        doAudioDrums = drums;
+                        doAudioBass = bass;
+                        doAudioGuitar = guitar;
+                        doAudioKeys = keys;
+                        doAudioVocals = vocals;
+                        doAudioBacking = backing;
+                        doAudioCrowd = crowd;
                         return;
                     }
+                    doAudioDrums = drums;
+                    doAudioBass = bass;
+                    doAudioGuitar = guitar;
+                    doAudioKeys = keys;
+                    doAudioVocals = vocals;
+                    doAudioBacking = backing;
+                    doAudioCrowd = crowd;
                 }
                 else
                 {
@@ -17606,7 +17729,8 @@ namespace cPlayer
             KV("Rhythm on Keys?", song.isRhythmOnKeys ? "Yes" : "No");
             KV("Rhythm on Bass?", song.isRhythmOnBass ? "Yes" : "No");
             KV("Has Pro Keys?", (song.hasProKeys) ? "Yes" : "No");
-            KV("Audio Delay", song.PSDelay == 0 ? "None" : song.PSDelay.ToString(CultureInfo.InvariantCulture) + " ms");
+            KV("Audio Delay", song.AudioDelay == 0 ? "None" : song.AudioDelay.ToString(CultureInfo.InvariantCulture) + " ms");
+            KV("Audio Offset", song.AudioOffset == 0 ? "None" : song.AudioOffset.ToString(CultureInfo.InvariantCulture) + " ms");
             KV("Language(s)", song.Languages);
 
             Section("Audio Channels");
@@ -18434,7 +18558,7 @@ namespace cPlayer
             if (!OGGs.Any()) return;
             List<int> NextSongStreams;
             int mixer;
-            if (!PrepMixerPS(OGGs, out mixer, out NextSongStreams)) goto ReleaseTempStreams;
+            if (!PrepMixerPC(OGGs, out mixer, out NextSongStreams)) goto ReleaseTempStreams;
             foreach (var stream in NextSongStreams.Where(stream => stream != 0))
             {
                 double newIntroSilence;
@@ -20291,7 +20415,8 @@ namespace cPlayer
         public bool isRhythmOnBass { get; set; }
         public bool isRhythmOnKeys { get; set; }
         public bool hasProKeys { get; set; }
-        public int PSDelay { get; set; }
+        public int AudioDelay { get; set; }
+        public int AudioOffset { get; set; } //for Sound System
         public int ChannelsBassStart { get; set; }
         public int ChannelsDrumsStart { get; set; }
         public int ChannelsGuitarStart { get; set; }

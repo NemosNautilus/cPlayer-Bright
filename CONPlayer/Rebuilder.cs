@@ -144,7 +144,7 @@ namespace cPlayer
                     isRhythmOnBass = dtaSong.RhythmBass,
                     isRhythmOnKeys = dtaSong.RhythmKeys || (dtaSong.Name.Contains("Rhythm Version") && !dtaSong.RhythmBass),
                     hasProKeys = dtaSong.ProKeysDiff > 0,
-                    PSDelay = dtaSong.PSDelay,
+                    AudioDelay = dtaSong.AudioDelay,
                     Languages = dtaSong.Languages,
                     VocalParts = dtaSong.VocalParts,
                 };

@@ -96,7 +96,7 @@
             this.chkCrowd.TabStop = false;
             this.chkCrowd.Text = "Crowd";
             this.chkCrowd.UseVisualStyleBackColor = true;
-            this.chkCrowd.CheckedChanged += new System.EventHandler(this.chkBass_CheckedChanged);
+            this.chkCrowd.CheckedChanged += new System.EventHandler(this.chkCrowd_CheckedChanged);
             // 
             // chkBacking
             // 
@@ -111,7 +111,7 @@
             this.chkBacking.TabStop = false;
             this.chkBacking.Text = "Backing";
             this.chkBacking.UseVisualStyleBackColor = true;
-            this.chkBacking.CheckedChanged += new System.EventHandler(this.chkBass_CheckedChanged);
+            this.chkBacking.CheckedChanged += new System.EventHandler(this.chkBacking_CheckedChanged);
             // 
             // chkKeys
             // 
@@ -126,7 +126,7 @@
             this.chkKeys.TabStop = false;
             this.chkKeys.Text = "Keys";
             this.chkKeys.UseVisualStyleBackColor = true;
-            this.chkKeys.CheckedChanged += new System.EventHandler(this.chkBass_CheckedChanged);
+            this.chkKeys.CheckedChanged += new System.EventHandler(this.chkKeys_CheckedChanged);
             // 
             // chkVocals
             // 
@@ -141,7 +141,7 @@
             this.chkVocals.TabStop = false;
             this.chkVocals.Text = "Vocals";
             this.chkVocals.UseVisualStyleBackColor = true;
-            this.chkVocals.CheckedChanged += new System.EventHandler(this.chkBass_CheckedChanged);
+            this.chkVocals.CheckedChanged += new System.EventHandler(this.chkVocals_CheckedChanged);
             // 
             // chkGuitar
             // 
@@ -156,7 +156,7 @@
             this.chkGuitar.TabStop = false;
             this.chkGuitar.Text = "Guitar";
             this.chkGuitar.UseVisualStyleBackColor = true;
-            this.chkGuitar.CheckedChanged += new System.EventHandler(this.chkBass_CheckedChanged);
+            this.chkGuitar.CheckedChanged += new System.EventHandler(this.chkGuitar_CheckedChanged);
             // 
             // chkBass
             // 
@@ -186,7 +186,7 @@
             this.chkDrums.TabStop = false;
             this.chkDrums.Text = "Drums";
             this.chkDrums.UseVisualStyleBackColor = true;
-            this.chkDrums.CheckedChanged += new System.EventHandler(this.chkBass_CheckedChanged);
+            this.chkDrums.CheckedChanged += new System.EventHandler(this.chkDrums_CheckedChanged);
             // 
             // picBassSlider
             // 

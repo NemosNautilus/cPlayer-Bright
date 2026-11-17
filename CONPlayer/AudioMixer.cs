@@ -179,32 +179,13 @@ namespace cPlayer
             if (!chkCrowd.Checked) picCrowdBackground.BackColor = Color.Silver;
         }
 
-        private void UpdateAudioPlayback()
-        {
-            if (isLoading) return;
-            MainForm.doAudioDrums = chkDrums.Checked;
-            MainForm.doAudioBass = chkBass.Checked;
-            MainForm.doAudioGuitar = chkGuitar.Checked;
-            MainForm.doAudioVocals = chkVocals.Checked;
-            MainForm.doAudioKeys = chkKeys.Checked;
-            MainForm.doAudioBacking = chkBacking.Checked;
-            MainForm.doAudioCrowd = chkCrowd.Checked;
-
-            ApplyGainToStem(picBassSlider, picBassBackground, Stem.Bass);
-            ApplyGainToStem(picDrumsSlider, picDrumsBackground, Stem.Drums);
-            ApplyGainToStem(picGuitarSlider, picGuitarBackground, Stem.Guitar);
-            ApplyGainToStem(picKeysSlider, picKeysBackground, Stem.Keys);
-            ApplyGainToStem(picVocalsSlider, picVocalsBackground, Stem.Vocals);
-            ApplyGainToStem(picBackingSlider, picBackingBackground, Stem.Backing);
-            ApplyGainToStem(picCrowdSlider, picCrowdBackground, Stem.Crowd);
-
-            UpdateAudioStems();
-            VerifySliderEnabled();
-        }
-
         private void chkBass_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateAudioPlayback();
+            if (isLoading) return;
+            MainForm.doAudioBass = chkBass.Checked;
+            ApplyGainToStem(picBassSlider, picBassBackground, Stem.Bass);
+            UpdateAudioStems();
+            VerifySliderEnabled();
         }
 
         private void picBassSlider_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -379,7 +360,7 @@ namespace cPlayer
         }        
 
         private void UpdateAudioStems()
-        {
+        {            
             if (MainForm.BassStream != 0 && MainForm.BassMixer != 0) //this should be instant
             {
                 MainForm.UpdateStemVolumes();
@@ -779,6 +760,59 @@ namespace cPlayer
 
             if (!isLoading)
                 MainForm.ApplyMasterVolume();
+        }
+
+        private void chkDrums_CheckedChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            MainForm.doAudioDrums = chkDrums.Checked;
+            ApplyGainToStem(picDrumsSlider, picDrumsBackground, Stem.Drums);
+            UpdateAudioStems();
+        }
+
+        private void chkGuitar_CheckedChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return; 
+            MainForm.doAudioGuitar = chkGuitar.Checked;
+            ApplyGainToStem(picGuitarSlider, picGuitarBackground, Stem.Guitar);
+            UpdateAudioStems();
+            VerifySliderEnabled();
+        }
+
+        private void chkKeys_CheckedChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            MainForm.doAudioKeys = chkKeys.Checked;
+            ApplyGainToStem(picKeysSlider, picKeysBackground, Stem.Keys);
+            UpdateAudioStems();
+            VerifySliderEnabled();
+        }
+
+        private void chkVocals_CheckedChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            MainForm.doAudioVocals = chkVocals.Checked; 
+            ApplyGainToStem(picVocalsSlider, picVocalsBackground, Stem.Vocals);
+            UpdateAudioStems();
+            VerifySliderEnabled();
+        }
+
+        private void chkBacking_CheckedChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            MainForm.doAudioBacking = chkBacking.Checked; 
+            ApplyGainToStem(picBackingSlider, picBackingBackground, Stem.Backing);
+            UpdateAudioStems();
+            VerifySliderEnabled();
+        }
+
+        private void chkCrowd_CheckedChanged(object sender, EventArgs e)
+        {
+            if (isLoading) return;
+            MainForm.doAudioCrowd = chkCrowd.Checked;
+            ApplyGainToStem(picCrowdSlider, picCrowdBackground, Stem.Crowd);
+            UpdateAudioStems();
+            VerifySliderEnabled();
         }
     }
 }

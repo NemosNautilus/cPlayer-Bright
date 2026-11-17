@@ -490,7 +490,7 @@ namespace cPlayer
             // 
             this.fullSupportToolStripMenuItem.Enabled = false;
             this.fullSupportToolStripMenuItem.Name = "fullSupportToolStripMenuItem";
-            this.fullSupportToolStripMenuItem.Size = new System.Drawing.Size(485, 22);
+            this.fullSupportToolStripMenuItem.Size = new System.Drawing.Size(571, 22);
             this.fullSupportToolStripMenuItem.Text = "(Full Support)";
             // 
             // xbox360
@@ -500,7 +500,7 @@ namespace cPlayer
             this.xbox360.CheckState = System.Windows.Forms.CheckState.Checked;
             this.xbox360.ForeColor = System.Drawing.Color.Black;
             this.xbox360.Name = "xbox360";
-            this.xbox360.Size = new System.Drawing.Size(485, 22);
+            this.xbox360.Size = new System.Drawing.Size(571, 22);
             this.xbox360.Text = "Rock Band 1/2/3 | Xbox 360 (CON | LIVE)";
             this.xbox360.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -509,7 +509,7 @@ namespace cPlayer
             this.pS3.BackColor = System.Drawing.Color.White;
             this.pS3.ForeColor = System.Drawing.Color.Black;
             this.pS3.Name = "pS3";
-            this.pS3.Size = new System.Drawing.Size(485, 22);
+            this.pS3.Size = new System.Drawing.Size(571, 22);
             this.pS3.Text = "Rock Band 1/2/3 | PlayStation 3 (.pkg | songs.dta)";
             this.pS3.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -518,7 +518,7 @@ namespace cPlayer
             this.wii.BackColor = System.Drawing.Color.White;
             this.wii.ForeColor = System.Drawing.Color.Black;
             this.wii.Name = "wii";
-            this.wii.Size = new System.Drawing.Size(485, 22);
+            this.wii.Size = new System.Drawing.Size(571, 22);
             this.wii.Text = "Rock Band 1/2/3 | Wii (songs.dta)";
             this.wii.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -527,7 +527,7 @@ namespace cPlayer
             this.fortNite.BackColor = System.Drawing.Color.White;
             this.fortNite.ForeColor = System.Drawing.Color.Black;
             this.fortNite.Name = "fortNite";
-            this.fortNite.Size = new System.Drawing.Size(485, 22);
+            this.fortNite.Size = new System.Drawing.Size(571, 22);
             this.fortNite.Text = "Fortnite Festival | PC (.fnf | .m4a)";
             this.fortNite.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -536,26 +536,27 @@ namespace cPlayer
             this.yarg.BackColor = System.Drawing.Color.White;
             this.yarg.ForeColor = System.Drawing.Color.Black;
             this.yarg.Name = "yarg";
-            this.yarg.Size = new System.Drawing.Size(485, 22);
-            this.yarg.Text = "YARG / Clone Hero / Fret Smasher | PC (songs.dta | .yargsong | song.ini | .sng )";
+            this.yarg.Size = new System.Drawing.Size(571, 22);
+            this.yarg.Text = "YARG / Clone Hero / Sound System / Fret Smasher | PC (songs.dta | .yargsong | son" +
+    "g.ini | .sng )";
             this.yarg.Click += new System.EventHandler(this.UpdateConsole);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(482, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(568, 6);
             // 
             // limitedSupportToolStripMenuItem
             // 
             this.limitedSupportToolStripMenuItem.Enabled = false;
             this.limitedSupportToolStripMenuItem.Name = "limitedSupportToolStripMenuItem";
-            this.limitedSupportToolStripMenuItem.Size = new System.Drawing.Size(485, 22);
+            this.limitedSupportToolStripMenuItem.Size = new System.Drawing.Size(571, 22);
             this.limitedSupportToolStripMenuItem.Text = "(Limited Support)";
             // 
             // rb4PS4
             // 
             this.rb4PS4.Name = "rb4PS4";
-            this.rb4PS4.Size = new System.Drawing.Size(485, 22);
+            this.rb4PS4.Size = new System.Drawing.Size(571, 22);
             this.rb4PS4.Text = "Rock Band 4 | PlayStation 4 (*_ps4)";
             this.rb4PS4.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -564,7 +565,7 @@ namespace cPlayer
             this.rockSmith.BackColor = System.Drawing.Color.White;
             this.rockSmith.ForeColor = System.Drawing.Color.Black;
             this.rockSmith.Name = "rockSmith";
-            this.rockSmith.Size = new System.Drawing.Size(485, 22);
+            this.rockSmith.Size = new System.Drawing.Size(571, 22);
             this.rockSmith.Text = "Rocksmith 2014 | PC (.psarc)";
             this.rockSmith.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -573,7 +574,7 @@ namespace cPlayer
             this.guitarHero.BackColor = System.Drawing.Color.White;
             this.guitarHero.ForeColor = System.Drawing.Color.Black;
             this.guitarHero.Name = "guitarHero";
-            this.guitarHero.Size = new System.Drawing.Size(485, 22);
+            this.guitarHero.Size = new System.Drawing.Size(571, 22);
             this.guitarHero.Text = "Guitar Hero: World Tour: Definitive Edition | PC (.fsb.xen)";
             this.guitarHero.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -582,7 +583,7 @@ namespace cPlayer
             this.powerGig.BackColor = System.Drawing.Color.White;
             this.powerGig.ForeColor = System.Drawing.Color.Black;
             this.powerGig.Name = "powerGig";
-            this.powerGig.Size = new System.Drawing.Size(485, 22);
+            this.powerGig.Size = new System.Drawing.Size(571, 22);
             this.powerGig.Text = "Power Gig | PC (.xml)";
             this.powerGig.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -591,7 +592,7 @@ namespace cPlayer
             this.bandFuse.BackColor = System.Drawing.Color.White;
             this.bandFuse.ForeColor = System.Drawing.Color.Black;
             this.bandFuse.Name = "bandFuse";
-            this.bandFuse.Size = new System.Drawing.Size(485, 22);
+            this.bandFuse.Size = new System.Drawing.Size(571, 22);
             this.bandFuse.Text = "BandFuse | Xbox 360 (LIVE)";
             this.bandFuse.Click += new System.EventHandler(this.UpdateConsole);
             // 
@@ -804,7 +805,7 @@ namespace cPlayer
             this.useLEDs.CheckState = System.Windows.Forms.CheckState.Checked;
             this.useLEDs.Enabled = false;
             this.useLEDs.Name = "useLEDs";
-            this.useLEDs.Size = new System.Drawing.Size(180, 22);
+            this.useLEDs.Size = new System.Drawing.Size(131, 22);
             this.useLEDs.Text = "Use LEDs";
             this.useLEDs.Click += new System.EventHandler(this.useLEDs_Click);
             // 
@@ -815,7 +816,7 @@ namespace cPlayer
             this.useStrobe.CheckState = System.Windows.Forms.CheckState.Checked;
             this.useStrobe.Enabled = false;
             this.useStrobe.Name = "useStrobe";
-            this.useStrobe.Size = new System.Drawing.Size(180, 22);
+            this.useStrobe.Size = new System.Drawing.Size(131, 22);
             this.useStrobe.Text = "Use strobe";
             this.useStrobe.Click += new System.EventHandler(this.useStrobe_Click);
             // 
@@ -824,7 +825,7 @@ namespace cPlayer
             this.useFogger.CheckOnClick = true;
             this.useFogger.Enabled = false;
             this.useFogger.Name = "useFogger";
-            this.useFogger.Size = new System.Drawing.Size(180, 22);
+            this.useFogger.Size = new System.Drawing.Size(131, 22);
             this.useFogger.Text = "Use fogger";
             this.useFogger.Click += new System.EventHandler(this.useFogger_Click);
             // 
@@ -846,7 +847,7 @@ namespace cPlayer
             this.useFatsCoLEDs.CheckState = System.Windows.Forms.CheckState.Checked;
             this.useFatsCoLEDs.Enabled = false;
             this.useFatsCoLEDs.Name = "useFatsCoLEDs";
-            this.useFatsCoLEDs.Size = new System.Drawing.Size(180, 22);
+            this.useFatsCoLEDs.Size = new System.Drawing.Size(129, 22);
             this.useFatsCoLEDs.Text = "Use LEDs";
             this.useFatsCoLEDs.Click += new System.EventHandler(this.useFatsCoLEDs_Click);
             // 
@@ -857,7 +858,7 @@ namespace cPlayer
             this.useFatsCoStrobe.CheckState = System.Windows.Forms.CheckState.Checked;
             this.useFatsCoStrobe.Enabled = false;
             this.useFatsCoStrobe.Name = "useFatsCoStrobe";
-            this.useFatsCoStrobe.Size = new System.Drawing.Size(180, 22);
+            this.useFatsCoStrobe.Size = new System.Drawing.Size(129, 22);
             this.useFatsCoStrobe.Text = "Use strobe";
             this.useFatsCoStrobe.Click += new System.EventHandler(this.useFatsCoStrobe_Click);
             // 
@@ -1059,7 +1060,6 @@ namespace cPlayer
             this.picSecondScreen.TabIndex = 57;
             this.picSecondScreen.TabStop = false;
             this.picSecondScreen.Tag = "disabled";
-            this.toolTip1.SetToolTip(this.picSecondScreen, "Click to enable second screen");
             this.picSecondScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picSecondScreen_MouseClick);
             // 
             // lblArtist
@@ -1087,7 +1087,6 @@ namespace cPlayer
             this.picShuffle.TabIndex = 56;
             this.picShuffle.TabStop = false;
             this.picShuffle.Tag = "noshuffle";
-            this.toolTip1.SetToolTip(this.picShuffle, "Enable track shuffling");
             this.picShuffle.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picShuffle_MouseClick);
             // 
             // picLoop
@@ -1102,7 +1101,6 @@ namespace cPlayer
             this.picLoop.TabIndex = 55;
             this.picLoop.TabStop = false;
             this.picLoop.Tag = "noloop";
-            this.toolTip1.SetToolTip(this.picLoop, "Enable track looping");
             this.picLoop.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picLoop_MouseClick);
             // 
             // picNext
@@ -1117,7 +1115,6 @@ namespace cPlayer
             this.picNext.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picNext.TabIndex = 54;
             this.picNext.TabStop = false;
-            this.toolTip1.SetToolTip(this.picNext, "Click to skip to next song");
             this.picNext.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picNext_MouseClick);
             // 
             // picPause
@@ -1132,7 +1129,6 @@ namespace cPlayer
             this.picPause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picPause.TabIndex = 53;
             this.picPause.TabStop = false;
-            this.toolTip1.SetToolTip(this.picPause, "Click to pause playback");
             this.picPause.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPause_MouseClick);
             // 
             // picStop
@@ -1147,7 +1143,6 @@ namespace cPlayer
             this.picStop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picStop.TabIndex = 52;
             this.picStop.TabStop = false;
-            this.toolTip1.SetToolTip(this.picStop, "Click to stop playback");
             this.picStop.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picStop_MouseClick);
             // 
             // picPlay
@@ -1161,7 +1156,6 @@ namespace cPlayer
             this.picPlay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picPlay.TabIndex = 51;
             this.picPlay.TabStop = false;
-            this.toolTip1.SetToolTip(this.picPlay, "Click to begin playback");
             this.picPlay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPlay_MouseClick);
             // 
             // picRandom
@@ -1175,7 +1169,6 @@ namespace cPlayer
             this.picRandom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picRandom.TabIndex = 50;
             this.picRandom.TabStop = false;
-            this.toolTip1.SetToolTip(this.picRandom, "Pick a random song");
             this.picRandom.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picRandom_MouseClick);
             // 
             // picVolume
@@ -1189,7 +1182,6 @@ namespace cPlayer
             this.picVolume.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picVolume.TabIndex = 49;
             this.picVolume.TabStop = false;
-            this.toolTip1.SetToolTip(this.picVolume, "Click to adjust volume");
             this.picVolume.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picVolume_MouseClick);
             // 
             // panelSlider
@@ -1200,7 +1192,6 @@ namespace cPlayer
             this.panelSlider.Name = "panelSlider";
             this.panelSlider.Size = new System.Drawing.Size(14, 14);
             this.panelSlider.TabIndex = 43;
-            this.toolTip1.SetToolTip(this.panelSlider, "Click to drag");
             this.panelSlider.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelSlider_MouseDown);
             this.panelSlider.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelSlider_MouseMove);
             this.panelSlider.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelSlider_MouseUp);
@@ -1212,7 +1203,6 @@ namespace cPlayer
             this.panelLine.Name = "panelLine";
             this.panelLine.Size = new System.Drawing.Size(310, 6);
             this.panelLine.TabIndex = 42;
-            this.toolTip1.SetToolTip(this.panelLine, "Click to play from here");
             this.panelLine.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelLine_MouseClick);
             this.panelLine.MouseHover += new System.EventHandler(this.panelLine_MouseHover);
             // 
@@ -1226,7 +1216,6 @@ namespace cPlayer
             this.lblTime.TabIndex = 41;
             this.lblTime.Text = "0:00";
             this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.lblTime, "Current position");
             // 
             // lblDuration
             // 
@@ -1238,7 +1227,6 @@ namespace cPlayer
             this.lblDuration.TabIndex = 40;
             this.lblDuration.Text = "0:00";
             this.lblDuration.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblDuration, "Song length");
             // 
             // lblYear
             // 

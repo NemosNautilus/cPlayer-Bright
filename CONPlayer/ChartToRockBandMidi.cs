@@ -319,7 +319,7 @@ namespace cPlayer
                 drumsTrack.Add(new NoteOnEvent(tick, 10, pitch, 100, drumNoteLength));
                 drumsTrack.Add(new NoteEvent(tick + drumNoteLength, 10, MidiCommandCode.NoteOff, pitch, 0));
             }
-
+            drumsTrack.Sort((a, b) => a.AbsoluteTime.CompareTo(b.AbsoluteTime));
             int lastDrumTick = drumsTrack.Count > 0 ? (int)drumsTrack[drumsTrack.Count - 1].AbsoluteTime + 1 : 0;
             drumsTrack.Add(new MetaEvent(MetaEventType.EndTrack, 0, lastDrumTick));
             midi.AddTrack(drumsTrack);
@@ -363,6 +363,8 @@ namespace cPlayer
                     vocalTrack.Add(new NoteEvent(tick + duration, 1, MidiCommandCode.NoteOff, 60, 0));
                 }
             }
+
+            vocalTrack.Sort((a, b) => a.AbsoluteTime.CompareTo(b.AbsoluteTime));
             int lastVocalTick = vocalTrack.Count > 0 ? (int)vocalTrack[vocalTrack.Count - 1].AbsoluteTime + 1 : 0;
             vocalTrack.Add(new MetaEvent(MetaEventType.EndTrack, 0, lastVocalTick));
             midi.AddTrack(vocalTrack);
@@ -411,6 +413,7 @@ namespace cPlayer
                 track.Add(new NoteOnEvent(tick, 1, pitch, 100, length));
                 track.Add(new NoteEvent(tick + length, 1, MidiCommandCode.NoteOff, pitch, 0));
             }
+            track.Sort((a, b) => a.AbsoluteTime.CompareTo(b.AbsoluteTime));
             int lastTick = track.Count > 0 ? (int)track[track.Count - 1].AbsoluteTime + 1 : 0;
             track.Add(new MetaEvent(MetaEventType.EndTrack, 0, lastTick));
             return track;

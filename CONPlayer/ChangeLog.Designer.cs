@@ -86,7 +86,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(244, 18);
             this.label5.TabIndex = 7;
-            this.label5.Text = "Developed by TrojanNemo";
+            this.label5.Text = "Developed by Nemo's Nautilus";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblCopyright
